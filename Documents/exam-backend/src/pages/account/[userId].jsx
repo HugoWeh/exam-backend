@@ -31,7 +31,7 @@ const UserPage = ({ colists, user }) => {
               className="flex justify-between items-center bg-gray-50 p-4 rounded-lg shadow hover:bg-gray-200"
             >
               <Link
-                href={`/colist/${colist._id}`}
+                href={`/account/${user._id}/${colist._id}`}
                 className="text-lg text-indigo-600 hover:underline"
               >
                 {colist.name}

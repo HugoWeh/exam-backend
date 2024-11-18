@@ -10,25 +10,18 @@ const handler = createRoute(async (req, res) => {
       return res.status(400).send({ error: "Email and password are required" });
     }
 
-    try {
-      const user = await UserModel.findOne({ email });
+    const user = await UserModel.findOne({ email });
 
-      if (!user) {
-        return res.status(404).send({ error: "User not found" });
-      }
+    if (!user) {
+      return res.status(404).send({ error: "User not found" });
+    }
 
-      const passwordMatch = await bcrypt.compare(password, user.password);
+    const passwordMatch = await bcrypt.compare(password, user.password);
 
-      if (passwordMatch) {
-        return res.status(200).send({ success: true, userId: user._id });
-      } else {
-        return res.status(401).send({ error: "Invalid password" });
-      }
-    } catch (error) {
-      console.error("Error during authentication:", error);
-      return res
-        .status(500)
-        .send({ error: "Something went wrong. Please try again later." });
+    if (passwordMatch) {
+      return res.status(200).send({ success: true, userId: user._id });
+    } else {
+      return res.status(401).send({ error: "Invalid password" });
     }
   } else {
     return res.status(405).send({ error: "Method Not Allowed" });

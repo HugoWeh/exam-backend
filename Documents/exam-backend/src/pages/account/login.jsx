@@ -16,10 +16,7 @@ const validationSchema = yup.object({
 const LoginPage = () => {
   const router = useRouter();
 
-  const submit = async (
-    { email, password },
-    { resetForm, setSubmitting, setFieldError }
-  ) => {
+  const submit = async ({ email, password }, { resetForm }) => {
     try {
       const { data } = await axios.post("http://localhost:3000/api/login", {
         email,
@@ -28,16 +25,11 @@ const LoginPage = () => {
 
       if (data.success) {
         router.push(`/account/${data.userId}`);
-      } else {
-        setFieldError("password", "Invalid email or password");
       }
     } catch (error) {
-      console.error("Login error:", error);
-      setFieldError("email", "Something went wrong. Please try again later.");
-    } finally {
-      setSubmitting(false);
-      resetForm();
+      console.error(error);
     }
+    resetForm();
   };
 
   return (

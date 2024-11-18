@@ -2,14 +2,22 @@ import { validationSchema } from "@/schemas/colist/validationSchema";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import axios from "axios";
 
-const initialValues = {
-  name: "Gérald",
-  description: "A cool colist",
-  owner: "Alice",
-  coAuthors: [],
+export const getServerSideProps = async ({ params: { userId } }) => {
+  const { data: user } = await axios(
+    `http://localhost:3000/api/users/${userId}`
+  );
+
+  return { props: { user } };
 };
 
-const CreatePage = () => {
+const CreatePage = ({ user }) => {
+  const initialValues = {
+    name: "",
+    description: "",
+    owner: user._id,
+    coAuthors: [],
+  };
+
   const submit = async (
     { name, description, owner, coAuthors },
     { resetForm }
