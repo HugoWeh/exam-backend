@@ -1,26 +1,26 @@
-import axios from "axios";
 import Link from "next/link";
 
-export const getServerSideProps = async () => {
-  const { data: colists } = await axios("http://localhost:3000/api/colists");
-
-  return { props: { colists } };
-};
-
-const HomePage = ({ colists }) => {
+const HomePage = () => {
   return (
-    <div className="flex flex-col items-center">
-      <h1>Colists</h1>
-      <ul>
-        {colists.map((colist) => (
-          <li key={colist._id}>
-            <Link href={`/colist/${colist._id}`}>{colist.name}</Link>
-          </li>
-        ))}
-      </ul>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 space-y-6 px-6">
+      <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">
+        Bienvenue sur CoList
+      </h1>
 
-      <Link href="/colist/create">Créer une CoList</Link>
-      <Link href="/account/login">Se connecter</Link>
+      <div className="space-y-4 w-full max-w-sm">
+        <Link
+          href="/account/login"
+          className="block w-full py-3 text-lg font-medium text-white bg-indigo-600 text-center rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
+        >
+          Se connecter
+        </Link>
+        <Link
+          href="/account/signup"
+          className="block w-full py-3 text-lg font-medium text-indigo-600 border-2 border-indigo-600 text-center rounded-md hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
+        >
+          Créer un compte
+        </Link>
+      </div>
     </div>
   );
 };
