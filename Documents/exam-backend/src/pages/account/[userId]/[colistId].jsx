@@ -14,16 +14,17 @@ export const getServerSideProps = async ({ params: { userId, colistId } }) => {
 };
 
 const Colist = ({ user, colist }) => {
+  const copyLink = () => {
+    const link = `${window.location.origin}/account/${user._id}/${colist._id}`;
+    navigator.clipboard.writeText(link);
+    alert("Lien copié dans le presse-papiers");
+  };
+
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg space-y-6">
       <h1 className="text-3xl font-semibold text-gray-800">{colist.name}</h1>
       <p className="text-lg text-gray-700">{colist.description}</p>
-      <p className="text-md text-gray-600">
-        Co-Authors:{" "}
-        {colist.coAuthors.length > 0
-          ? colist.coAuthors.join(", ")
-          : "Il n'y a pas de co-auteur"}
-      </p>
+      <p className="text-md text-gray-600">Co-Authors: {colist.coAuthors}</p>
 
       <div className="flex space-x-4">
         <Link
@@ -46,6 +47,12 @@ const Colist = ({ user, colist }) => {
         >
           Supprimer
         </Link>
+        <button
+          onClick={copyLink}
+          className="px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition duration-300"
+        >
+          Copier le lien d'invitation
+        </button>
       </div>
     </div>
   );

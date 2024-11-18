@@ -15,7 +15,7 @@ const CreatePage = ({ user }) => {
     name: "",
     description: "",
     owner: user._id,
-    coAuthors: [],
+    coAuthors: "",
   };
 
   const submit = async (
